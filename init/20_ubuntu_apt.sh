@@ -8,7 +8,7 @@ apt_packages=()
 deb_installed=()
 deb_sources=()
 
-installers_path="$.dotfiles/caches/installers"
+installers_path="$dotfiles/caches/installers"
 
 # Ubuntu distro release name, eg. "xenial"
 release_name=$(lsb_release -c | awk '{print $2}')
@@ -255,7 +255,7 @@ function other_stuff() {
   if [[ ! "$(type -P git-extras)" ]]; then
     e_header "Installing Git Extras"
     (
-      cd $.dotfiles/vendor/git-extras &&
+      cd $dotfiles/vendor/git-extras &&
       sudo make install
     )
   fi
@@ -269,7 +269,7 @@ function other_stuff() {
 ####################
 
 # Add APT keys.
-keys_cache=$.dotfiles/caches/init/apt_keys
+keys_cache=$dotfiles/caches/init/apt_keys
 IFS=$'\n' GLOBIGNORE='*' command eval 'setdiff_cur=($(<$keys_cache))'
 setdiff_new=("${apt_keys[@]}"); setdiff; apt_keys=("${setdiff_out[@]}")
 unset setdiff_new setdiff_cur setdiff_out
@@ -312,7 +312,7 @@ sudo apt-get -qq update
 
 # Only do a dist-upgrade on initial install, otherwise do an upgrade.
 e_header "Upgrading APT"
-if is_.dotfiles_bin; then
+if is_dotfiles_bin; then
   sudo apt-get -qy upgrade
 else
   sudo apt-get -qy dist-upgrade

@@ -1,14 +1,14 @@
 #!/usr/bin/env bash
 [[ "$1" == "source" ]] || \
 
-echo '.dotfiles - "mcaj-git" Ben Alman - http://benalman.com/'
+echo 'dotfiles - "mcaj-git" Ben Alman - http://benalman.com/'
 
 if [[ "$1" == "-h" || "$1" == "--help" ]]; then cat <<HELP
 
 Usage: $(basename "$0")
 
 See the README for documentation.
-https://github.com/mcaj-git/.dotfiles
+https://github.com/mcaj-git/dotfiles
 
 Copyright (c) 2014 "mcaj-git" Ben Alman
 Licensed under the MIT license.
@@ -21,7 +21,7 @@ exit; fi
 ###########################################
 
 # Where the magic happens.
-export .dotfiles=~/..dotfiles
+export dotfiles=~/.dotfiles
 
 # Logging stuff.
 function e_header()   { echo -e "\n\033[1m$@\033[0m"; }
@@ -49,14 +49,14 @@ function assert() {
   ${modes[success]} "$result"
 }
 
-# Test if the .dotfiles script is currently
-function is_.dotfiles_running() {
-  [[ "$.dotfiles_SCRIPT_RUNNING" ]] || return 1
+# Test if the dotfiles script is currently
+function is_dotfiles_running() {
+  [[ "$dotfiles_SCRIPT_RUNNING" ]] || return 1
 }
 
-# Test if this script was run via the ".dotfiles" bin script (vs. via curl/wget)
-function is_.dotfiles_bin() {
-  [[ "$(basename $0 2>/dev/null)" == .dotfiles ]] || return 1
+# Test if this script was run via the "dotfiles" bin script (vs. via curl/wget)
+function is_dotfiles_bin() {
+  [[ "$(basename $0 2>/dev/null)" == dotfiles ]] || return 1
 }
 
 # OS detection
@@ -262,17 +262,17 @@ function setdiff() {
 
 
 ###########################################
-# INTERNAL .dotfiles "INIT" VARS / FUNCTIONS
+# INTERNAL dotfiles "INIT" VARS / FUNCTIONS
 ###########################################
 
-.dotfiles_SCRIPT_RUNNING=1
+dotfiles_SCRIPT_RUNNING=1
 function cleanup {
-  unset .dotfiles_SCRIPT_RUNNING
+  unset dotfiles_SCRIPT_RUNNING
 }
 trap cleanup EXIT
 
 # Initialize.
-init_file=$.dotfiles/caches/init/selected
+init_file=$dotfiles/caches/init/selected
 function init_files() {
   local i f dirname oses os opt remove
   dirname="$(dirname "$1")"
@@ -346,7 +346,7 @@ function config_do() {
 # Copy, link, init, etc.
 function do_stuff() {
   local base dest skip
-  local files=($.dotfiles/$1/*)
+  local files=($dotfiles/$1/*)
   [[ $(declare -f "$1_files") ]] && files=($($1_files "${files[@]}"))
   # No files? abort.
   if (( ${#files[@]} == 0 )); then return; fi
@@ -388,7 +388,7 @@ function do_stuff() {
 # Enough with the functions, let's do stuff.
 
 # Set the prompt delay to be longer for the very first run.
-export prompt_delay=5; is_.dotfiles_bin || prompt_delay=15
+export prompt_delay=5; is_dotfiles_bin || prompt_delay=15
 
 # Keep-alive: update existing sudo time stamp if set, otherwise do nothing.
 # Note that this doesn't work with Homebrew, since brew explicitly invalidates
@@ -398,11 +398,11 @@ while true; do sudo -n true; sleep 10; kill -0 "$$" || exit; done 2>/dev/null &
 
 # Install a custom sudoers file that allows "sudo apt-get" to be executed
 # without asking for a password.
-sudoers_file=/etc/sudoers.d/mcaj-git-.dotfiles
+sudoers_file=/etc/sudoers.d/mcaj-git-dotfiles
 # Contents of the sudoers file.
 function sudoers_text() {
   cat <<EOF
-# This file was created by mcaj-git's .dotfiles script on $(date -I)
+# This file was created by mcaj-git's dotfiles script on $(date -I)
 # (which will never update it, only recreate it if it's missing)
 # Sudoers reference: http://ubuntuforums.org/showthread.php?t=1132821
 
@@ -469,21 +469,21 @@ if [[ ! "$(type -P git)" ]]; then
 fi
 
 # Initialize.
-if [[ ! -d $.dotfiles ]]; then
-  # .dotfiles directory doesn't exist? Clone it!
-  e_header "Downloading .dotfiles"
-  git clone --branch ${.dotfiles_GH_BRANCH:-master} --recursive \
-    git://github.com/${.dotfiles_GH_USER:-mcaj-git}/.dotfiles.git $.dotfiles
-  cd $.dotfiles
+if [[ ! -d $dotfiles ]]; then
+  # dotfiles directory doesn't exist? Clone it!
+  e_header "Downloading dotfiles"
+  git clone --branch ${dotfiles_GH_BRANCH:-master} --recursive \
+    git://github.com/${dotfiles_GH_USER:-mcaj-git}/dotfiles.git $dotfiles
+  cd $dotfiles
 elif [[ "$1" != "restart" ]]; then
   # Make sure we have the latest files.
-  e_header "Updating .dotfiles"
-  cd $.dotfiles
+  e_header "Updating dotfiles"
+  cd $dotfiles
   prev_head="$(git rev-parse HEAD)"
   git pull
   git submodule update --init --recursive --quiet
   if [[ "$(git rev-parse HEAD)" != "$prev_head" ]]; then
-    if is_.dotfiles_bin; then
+    if is_dotfiles_bin; then
       e_header "Changes detected, restarting script"
       exec "$0" restart
     else
@@ -494,17 +494,17 @@ elif [[ "$1" != "restart" ]]; then
 fi
 
 # Add binaries into the path
-[[ -d $.dotfiles/bin ]] && export PATH=$.dotfiles/bin:$PATH
+[[ -d $dotfiles/bin ]] && export PATH=$dotfiles/bin:$PATH
 
 # Tweak file globbing.
 shopt -s dotglob
 shopt -s nullglob
 
 # Create caches dir and init subdir, if they don't already exist.
-mkdir -p "$.dotfiles/caches/init"
+mkdir -p "$dotfiles/caches/init"
 
 # If backups are needed, this is where they'll go.
-backup_dir="$.dotfiles/backups/$(date "+%Y_%m_%d-%H_%M_%S")/"
+backup_dir="$dotfiles/backups/$(date "+%Y_%m_%d-%H_%M_%S")/"
 backup=
 
 # Execute code for each file in these subdirectories.

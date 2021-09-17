@@ -8,6 +8,6 @@ windows:
   - shell_command: vim
     focus: true
   - shell_command:
-  window_name: .dotfiles
-  start_directory: '~/..dotfiles'
+  window_name: dotfiles
+  start_directory: '~/.dotfiles'
   focus: true

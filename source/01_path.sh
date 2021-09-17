@@ -1,6 +1,6 @@
 paths=(
   ~/.local/bin
-  $.dotfiles/bin
+  $dotfiles/bin
 )
 
 export PATH

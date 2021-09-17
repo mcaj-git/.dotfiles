@@ -5,7 +5,7 @@
 # http://benalman.com/about/license/
 #
 # Example:
-# [master:!?][mcaj-git@CowBook:~/.dotfiles]
+# [master:!?][mcaj-git@CowBook:~/dotfiles]
 # [11:14:45] $
 #
 # Read more (and see a screenshot) in the "Prompt" section of

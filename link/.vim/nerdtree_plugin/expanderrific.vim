@@ -1,5 +1,5 @@
 " expanderrific.vim
-" https://github.com/mcaj-git/.dotfiles
+" https://github.com/mcaj-git/dotfiles
 "
 " Allow right/left to expand/collapse NERDTree dirs in a more meaningful way.
 

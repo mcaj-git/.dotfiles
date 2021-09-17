@@ -5,11 +5,11 @@
 # http://benalman.com/about/license/
 #
 # Example:
-# [master:!?][mcaj-git@CowBook:~/..dotfiles]
+# [master:!?][mcaj-git@CowBook:~/.dotfiles]
 # [11:14:45] $
 #
 # Read more (and see a screenshot) in the "Prompt" section of
-# https://github.com/mcaj-git/.dotfiles
+# https://github.com/mcaj-git/dotfiles
 
 # Abort if a prompt is already defined.
 [[ "$PROMPT_COMMAND" ]] && return
@@ -127,7 +127,7 @@ function __prompt_command() {
   # Iterate over all vcs info parts, outputting an escaped var name that will
   # be interpolated automatically. This ensures that malicious branch names
   # can't execute arbitrary commands. For more info, see this PR:
-  # https://github.com/mcaj-git/.dotfiles/pull/68
+  # https://github.com/mcaj-git/dotfiles/pull/68
   if [[ "${#__prompt_vcs_info[@]}" != 0 ]]; then
     PS1="$PS1$c1[$c0"
     for i in "${!__prompt_vcs_info[@]}"; do

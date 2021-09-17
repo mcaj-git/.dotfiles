@@ -11,11 +11,11 @@ map <F1> <Esc>
 imap <F1> <Esc>
 
 " Local dirs
-if !has('win32') && !empty($.dotfiles)
-  set backupdir=$.dotfiles/caches/vim
-  set directory=$.dotfiles/caches/vim
-  set undodir=$.dotfiles/caches/vim
-  let g:netrw_home = expand('$.dotfiles/caches/vim')
+if !has('win32') && !empty($dotfiles)
+  set backupdir=$dotfiles/caches/vim
+  set directory=$dotfiles/caches/vim
+  set undodir=$dotfiles/caches/vim
+  let g:netrw_home = expand('$dotfiles/caches/vim')
 endif
 
 " Create vimrc autocmd group and remove any existing vimrc autocmds,

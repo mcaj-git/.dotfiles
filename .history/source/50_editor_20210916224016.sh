@@ -33,8 +33,8 @@ function q() {
     $VISUAL - > /dev/null
   fi
 }
-alias qv="q $.dotfiles/link/.{,g}vimrc +'cd $.dotfiles'"
-alias qs="q $.dotfiles"
+alias qv="q $dotfiles/link/.{,g}vimrc +'cd $dotfiles'"
+alias qs="q $dotfiles"
 
 # For when you have vim on the brain
 alias :q=exit

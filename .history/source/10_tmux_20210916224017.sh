@@ -2,7 +2,7 @@
 # already inside a tmux session.
 function tm() {
   local is_source=; [[ "$1" == "SOURCE" ]] && is_source=1 && shift
-  local tmux_no_logout=~/..dotfiles/caches/tmux-no-logout
+  local tmux_no_logout=~/.dotfiles/caches/tmux-no-logout
   if [[ ! "$TMUX" ]]; then
     # Clean up any orphaned "no logout" file.
     [[ -e $tmux_no_logout ]] && rm $tmux_no_logout

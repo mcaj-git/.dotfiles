@@ -4,7 +4,7 @@
 #
 # 1. $ ansible-playbook ansible/roles/ubuntu.yml -i aaa.bbb.ccc.ddd,
 # 2. $ ssh aaa.bbb.ccc.ddd
-# 3. Install .dotfiles!
+# 3. Install dotfiles!
 ---
 - hosts: all
   remote_user: root
